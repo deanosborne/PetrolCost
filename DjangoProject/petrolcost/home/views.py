@@ -13,3 +13,12 @@ def home(request):
 
 def about(request):
     return render(request, 'about-us.html')
+
+def deals(request):
+    return render(request, 'deals.html')
+
+def stats(request):
+    return render(request, 'statistics.html')
+
+def contact(request):
+    return render(request, 'contact.html')
