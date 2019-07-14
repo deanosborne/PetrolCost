@@ -12756,7 +12756,11 @@ body:not(.device-touch) .tagcloud a {
 /* ----------------------------------------------------------------
 	Bootstrap Specific
 -----------------------------------------------------------------*/
-
+.btn-light {
+    color: #212529;
+    background-color: #fff !important;
+    border-color: #fff !important;
+}
 .table .success { color: #3c763d; }
 
 .table .info { color: #31708f; }
