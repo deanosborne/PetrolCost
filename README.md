@@ -4,19 +4,19 @@ Iteration 1
 
 Whats included?
 
--base.html
--home.html
--about-us.html
--deals.html
--statistics.html
--contact.html
+- base.html
+- home.html
+- about-us.html
+- deals.html
+- statistics.html
+- contact.html
 
--Basic render URLs setup
--Basic views setup
--Models added
--Admin superuser made
--Template uses Canvas real-estate, has been modified to suit our needs
--Major file cleanup has been done as well as more to come
+- Basic render URLs setup
+- Basic views setup
+- Models added
+- Admin superuser made
+- Template uses Canvas real-estate, has been modified to suit our needs
+- Major file cleanup has been done as well as more to come
 
 Iteration 2
 
