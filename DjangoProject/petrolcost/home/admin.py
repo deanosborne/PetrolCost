@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Partner, Deal, Consumer
+from .models import Post
 
 # Register your models here.
 
-admin.site.register(Partner)
-admin.site.register(Deal)
-admin.site.register(Consumer)
+admin.site.register(Post)

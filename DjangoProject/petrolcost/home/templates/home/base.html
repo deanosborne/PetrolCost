@@ -39,10 +39,16 @@
 
 	<!-- Document Title
 	============================================= -->
-	<title>FillUp</title>
+{% block title %}<title>FillUp {{ title_text }}</title>{% endblock %}
 
 </head>
-
+{% if messages %}
+	{% for message in messages %}
+		<div class="alert alert-{{ message.tags }}">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endif %}
 <body class="stretched side-push-panel">
 {% block sidebar %}
 	<div id="side-panel">
@@ -52,33 +58,32 @@
 		<div class="side-panel-wrap">
 
 			<div class="widget clearfix">
-
-				<h4 class="t400">Login with Social Profiles</h4>
-
-				<a href="#" class="button button-rounded t400 btn-block center si-colored noleftmargin si-facebook">Facebook</a>
-				<a href="#" class="button button-rounded t400 btn-block center si-colored noleftmargin si-gplus">Google</a>
-
-				<div class="line"></div>
-
 				<h4 class="t400">Existing Account?</h4>
 
-				<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
+				<form id="login-form" name="login-form" class="nobottommargin" action="{% url 'login' %}" method="POST">{% csrf_token %}
 
 					<div class="col_full">
 						<label for="login-form-username" class="t400">Username:</label>
-						<input type="text" id="login-form-username" name="login-form-username" value="" class="form-control" />
+						<input type="text" id="login-form-username" name="username" class="form-control" />
 					</div>
 
 					<div class="col_full">
 						<label for="login-form-password" class="t400">Password:</label>
-						<input type="password" id="login-form-password" name="login-form-password" value="" class="form-control" />
+						<input type="password" id="login-form-password" name="password" class="form-control" />
 					</div>
 
 					<div class="col_full nobottommargin">
-						<button class="button button-rounded t400 nomargin" id="login-form-submit" name="login-form-submit" value="login">Login</button>
+						<button class="button button-rounded t400 nomargin" id="login-form-submit" name="login-form-submit" type="submit">Login</button>
 						<a href="#" class="fright">Forgot Password?</a>
 					</div>
+				<div class="line"></div>
+				<h4 class="t400">Login with Social Profiles</h4>
 
+				<a href="#" class="button button-rounded t400 btn-block center si-colored noleftmargin si-facebook">Facebook</a>
+				<a href="#" class="button button-rounded t400 btn-block center si-colored noleftmargin si-gplus">Google</a>
+				<div class="line"></div>
+				<h4 class="t400">New Here?</h4>
+				<a href="{% url 'register' %}" class="button button-rounded t400 btn-block center si-colored noleftmargin si-login">Register</a>
 				</form>
 
 
@@ -126,7 +131,12 @@
 						<ul>
 							<li><a href="#"><i class="icon-download-alt"></i> Download App</a></li>
 							</li>
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'profile' %}">Profile</a></li>
+								<li><a href="{% url 'logout' %}">Logout</a></li>
+							{% else %}
 							<li><a href="#" class="side-panel-trigger">Login/Register</a></li>
+							{% endif %}
 						</ul>
 					</div><!-- .top-links end -->
 
@@ -138,7 +148,7 @@
 
 		<!-- Header
 		============================================= -->
-		<header id="header" class="static-sticky transparent-header dark" data-responsive-class="not-dark">
+		<header id="header" class="static-sticky transparent-header dark" data-responsive-class="dark">
 
 			<div id="header-wrap">
 
@@ -158,7 +168,7 @@
 					<nav id="primary-menu" class="with-arrows">
 
 						<ul>
-							<li class="current"><a href="{% url 'home' %}"><div>Home</div></a></li>
+							<li><a href="{% url 'home' %}"><div>Home</div></a></li>
 							<li><a href="{% url 'about' %}"><div>About Us</div></a></li>
 							<li><a href="{% url 'deals' %}"><div>Deals</div></a>
 								<ul>
@@ -178,24 +188,19 @@
 			</div>
 
 		</header><!-- #header end -->
-		{% block content %}
-		{% endblock %}
-		{% block pagination %}
-			{% if is_paginated %}
-				<div class="pagination">
-					<span class="page-links">
-						{% if page_obj.has_previous %}
-							<a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-						{% endif %}
-						<span class="page-current">
-							Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-						</span>
-						{% if page_obj.has_next %}
-							<a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-						{% endif %}
-					</span>
+		{% block ptitle %}
+		<section id="page-title" class="page-title-parallax page-title-dark page-title-center" style="background: url('images/about-us/page-title.jpg') no-repeat center center / cover; padding: 140px 0;" data-center="background-position: 0px 50%;" data-top-bottom="background-position:0px 0px;">
+
+			<div class="container clearfix">
+				<h1>{{ title_text }}</h1>
+			</div>
+
+			<div class="video-wrap" style="position: absolute; top: 0; left: 0; height: 80%; z-index:1;">
+					<div class="video-overlay" style="background: rgba(0,0,0,0.3);"></div>
 				</div>
-			{% endif %}
+			</section>
+			{% endblock %}
+		{% block content %}
 		{% endblock %}
 
 		<!-- Footer

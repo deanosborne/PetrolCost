@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends "home/base.html" %}
 {% block content %}
 {% load staticfiles %}
+{% block ptitle %}
+{% endblock %}
 		<!-- Slider
 		============================================= -->
 		<section id="slider" class="slider-element full-screen clearfix" style="background: url({% static 'demos/real-estate/images/hero/.jpg' %}) top right no-repeat; background-size: cover;background-color:grey;" data-height-md="550">
@@ -113,12 +115,14 @@
 
 				<div class="container clearfix">
 					<div style="position: relative;">
+						<div class="featured-deals" style="padding-top: 80px;">
 						<div class="heading-block nobottomborder">
 							<h3>Featured Deals</h3>
 						</div>
 
-						<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin" style="position: absolute; top: 7px; right: 0;">Check All</a>
 
+						<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin" style="position: absolute; top: 80px; right: 0;">Check All</a>
+						</div>
 						<div class="real-estate owl-carousel image-carousel carousel-widget bottommargin-lg" data-margin="10" data-nav="true" data-loop="true" data-pagi="false" data-items-xs="1" data-items-sm="1" data-items-md="2" data-items-lg="3" data-items-xl="3">
 
 							<div class="oc-item">
@@ -228,11 +232,6 @@
 					</div>
 
 					<div class="clear"></div>
-
-					<div class="promo promo-dark promo-flat bottommargin-lg">
-						<h3 class="t400 ls1">Special Offers on petrol now</h3>
-						<a href="#" class="button button-dark button-large button-rounded">View All</a>
-					</div>
 
 					<div class="row real-estate-properties clearfix">
 
