@@ -40,4 +40,5 @@ To do:
 - Search/categories is the major focus for this
 - Improvements to templates
 - Placeholder images to be changed
+- Authorization: User groups for admin, consumer, affiliates
 - + more
