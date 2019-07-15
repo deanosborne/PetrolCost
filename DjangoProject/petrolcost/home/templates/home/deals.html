@@ -1,11 +1,38 @@
 {% extends "home/base.html" %}
+{% load staticfiles %}
+{% block title %}<title>FillUp Deals</title>{% endblock %}
+{% block ptitle %}
+<section id="page-title" class="page-title-parallax page-title-dark page-title-center" style="background: url('images/about-us/page-title.jpg') no-repeat center center / cover; padding: 140px 0;" data-center="background-position: 0px 50%;" data-top-bottom="background-position:0px 0px;">
 
+	<div class="container clearfix">
+		<h1>Deals</h1>
+	</div>
+
+	<div class="video-wrap" style="position: absolute; top: 0; left: 0; height: 80%; z-index:1;">
+			<div class="video-overlay" style="background: rgba(0,0,0,0.3);"></div>
+		</div>
+	</section>
+	{% endblock %}
 {% block content %}
+
 <section id="content">
 
 	<div class="content-wrap">
 		<div class="container clearfix">
 			<div style="position: relative;">
+				<div class="button-div" style="padding-bottom: 20px;">
+					<form method='GET'>
+					  <input type='text' name='q' value='{{ request.GET.q }}'>
+					  <input class="button" type='submit' value="Search Profile">
+					</form>
+				<a href="{%  url 'post-create' %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Create New Post</a>
+				<div class="button-div2" style="position: relative;float:right; padding-bottom: 20px;">
+				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Petrol</a>
+				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Diesel</a>
+				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">LPG</a>
+				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Other</a>
+				</div>
+				</div>
 {% for post in posts %}
 	<div class="media-body" style="background:#ffffff;padding: 10px 20px;border: 1px solid #dddddd;border-radius: 4px;margin-bottom: 10px; position: centre;">
         <article class="media content-section">
