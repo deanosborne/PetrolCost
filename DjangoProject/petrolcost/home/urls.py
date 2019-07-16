@@ -7,12 +7,13 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
     UserPostListView,
-    TagIndexView
+    TagIndexView,
+    HomeListView
 )
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', HomeListView.as_view(), name='home'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
@@ -22,6 +23,8 @@ urlpatterns = [
     path('deals/', PostListView.as_view(), name='deals'),
     path('stats/', views.stats, name='stats'),
     path('contact/', views.contact, name='contact'),
-    url(r'^tag/(?P<slug>[-\w]+)/$', TagIndexView.as_view(), name='tagged')
-
+    url(r'^tag/(?P<slug>[-\w]+)/$', TagIndexView.as_view(), name='tagged'),
+    path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
+    path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
+    path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 ]

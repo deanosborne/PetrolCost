@@ -20,15 +20,22 @@
 		<div class="container clearfix">
 			<div style="position: relative;">
 				<div class="button-div" style="padding-bottom: 20px;">
-					<form method='GET'>
-					  <input type='option' name='q' value='{{ request.GET.q }}'>
-					  <input class="button" type='submit' value="Search Profile">
-					</form>
 				<a href="{%  url 'post-create' %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Create New Post</a>
 				<div class="button-div2" style="position: relative;float:right; padding-bottom: 20px;">
-					{% for tag in tags %}
-				<a href="{% url 'tagged' tag.slug %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">{{ tag.name }}</a>
-				{% endfor %}
+					<a href="{%  url 'deals' %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Reset</a>
+					<div class="top-links">
+						<ul>
+							<li><a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Search</a>
+								<ul>
+									{% for tag in tags %}
+									<li><a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</li>
+						</ul>
+					</div><!-- .top-links end -->
+
+				</div>
 				</div>
 				</div>
 {% for post in posts %}
@@ -37,16 +44,17 @@
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+
               <small class="text-muted">{{ post.date_posted }}</small>
             </div>
             <h2 style="margin:0 0 0 0;"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+						<a href="{% url 'post-detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
 						</div>
 						</article>
 						</div>
     {% endfor %}
 	</div>
-</div>
 </div>
 </section>
     {% if is_paginated %}

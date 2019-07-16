@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -31,11 +32,39 @@ def contact(request):
     title_text = 'Contact'
     return render(request, 'home/contact.html', {'title_text':title_text})
 
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'home/add_comment_to_post.html', {'form': form})
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('post-detail', pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('post-detail', pk=comment.post.pk)
+
 class TagMixin(object):
     def get_context_data(self, **kwargs):
         context = super(TagMixin, self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all()
         return context
+
+class HomeListView(TagMixin, ListView):
+    model = Post
+    template_name = 'home/home.html'
 
 class TagIndexView(TagMixin, ListView):
     template_name = 'home/deals.html'
@@ -54,14 +83,6 @@ class PostListView(TagMixin, ListView):
     ordering = ['-date_posted']
     paginate_by = 5
 
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            object_list = self.model.objects.filter(content__icontains=query)
-        else:
-            object_list = self.model.objects.all()
-        return object_list
-
 class UserPostListView(ListView):
     model = Post
     template_name = 'home/user_posts.html'  # <app>/<model>_<viewtype>.html
@@ -74,6 +95,7 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    template_name = 'home/post_detail.html'
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post

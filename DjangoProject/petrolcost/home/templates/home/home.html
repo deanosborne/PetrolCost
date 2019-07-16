@@ -78,16 +78,6 @@
 													<option value="5+">5+</option>
 												</select>
 											</div>
-											<div class="w-100"></div>
-											<div class="col-md-6 col-12">
-												<label for="" style="margin-bottom: 20px !important;">Placeholder</label>
-												<input class="price-range-slider" />
-											</div>
-											<div class="w-100 d-block d-md-none bottommargin-sm"></div>
-											<div class="col-md-6 col-12">
-												<label for="" style="margin-bottom: 20px !important;">Placeholder</label>
-												<input class="area-range-slider" />
-											</div>
 											<div class="col-md-12 clearfix">
 												<button class="button button-3d button-rounded btn-block nomargin" style="margin-top: 35px !important;">Search Deals</button>
 											</div>
@@ -236,7 +226,9 @@
 					<div class="row real-estate-properties clearfix">
 
 						<div class="col-lg-7">
+							{% for tag in tags %}
 							<a href="#" style="background: url({% static 'demos/real-estate/images/cities/4.jpg' %}) no-repeat bottom center; background-size: cover;">
+								{% endfor %}
 								<div class="vertical-middle dark center">
 									<div class="heading-block nomargin noborder">
 										<h3 class="capitalize t500">Placeholder</h3>

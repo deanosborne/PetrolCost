@@ -13,7 +13,9 @@
     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
     <div class="media-body">
       <div class="article-metadata">
+
         <a class="mr-2" href="#">{{ object.author }}</a>
+				{{ tags.name }}
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         {% if object.author == user %}
           <div>
@@ -24,6 +26,25 @@
       </div>
       <h2 class="article-title">{{ object.title }}</h2>
       <p class="article-content">{{ object.content }}</p>
+			<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+			<hr>
+			{% for comment in post.comments.all %}
+			    {% if user.is_authenticated or comment.approved_comment %}
+			    <div class="comment">
+			        <div class="date">
+			            {{ comment.date_posted }}
+			            {% if not comment.approved_comment %}
+			                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+			                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+			            {% endif %}
+			        </div>
+			        <strong>{{ comment.author }}</strong>
+			        <p>{{ comment.text|linebreaks }}</p>
+			    </div>
+			    {% endif %}
+			{% empty %}
+			    <p>No comments here yet :(</p>
+			{% endfor %}
     </div>
   </article>
   </div>
