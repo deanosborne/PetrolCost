@@ -33,8 +33,14 @@ Changes:
 - Templates organized/made/updated
 - Various other minor changed made to organization of .py/template files
 
-To do:
+Iteration 3 WIP
+
+Changes:
 - Create post button
+- Template MINOR changes
+- Basic search in deals page
+
+To do:
 - User handler changes
 - Posting changes
 - Search/categories is the major focus for this
