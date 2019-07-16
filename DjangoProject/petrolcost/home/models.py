@@ -3,20 +3,15 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from taggit.managers import TaggableManager
+
 class Post(models.Model):
-
-    PROVIDER_CHOICES =(
-        ('NZ', 'AKL'),
-        ('NZ', 'WLG'),
-        ('NZ', 'CHC')
-    )
-
-
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, blank=True)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    city = models.CharField(choices=PROVIDER_CHOICES, max_length=30, null=True, blank=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

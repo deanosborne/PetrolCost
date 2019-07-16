@@ -14,7 +14,6 @@
 	</section>
 	{% endblock %}
 {% block content %}
-
 <section id="content">
 
 	<div class="content-wrap">
@@ -22,15 +21,14 @@
 			<div style="position: relative;">
 				<div class="button-div" style="padding-bottom: 20px;">
 					<form method='GET'>
-					  <input type='text' name='q' value='{{ request.GET.q }}'>
+					  <input type='option' name='q' value='{{ request.GET.q }}'>
 					  <input class="button" type='submit' value="Search Profile">
 					</form>
 				<a href="{%  url 'post-create' %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Create New Post</a>
 				<div class="button-div2" style="position: relative;float:right; padding-bottom: 20px;">
-				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Petrol</a>
-				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Diesel</a>
-				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">LPG</a>
-				<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin">Other</a>
+					{% for tag in tags %}
+				<a href="{% url 'tagged' tag.slug %}" class="button button-small button-rounded button-border button-border-thin t500 nomargin">{{ tag.name }}</a>
+				{% endfor %}
 				</div>
 				</div>
 {% for post in posts %}

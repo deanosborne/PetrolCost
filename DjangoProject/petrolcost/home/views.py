@@ -12,6 +12,8 @@ from .models import Post, Comment
 
 from .forms import *
 
+from taggit.models import Tag
+
 
 def home(request):
 
@@ -21,13 +23,6 @@ def about(request):
     title_text = 'About'
     return render(request, 'home/about-us.html', {'title_text':title_text})
 
-def deals(request):
-    title_text = 'Deals'
-    context = {
-        'posts': Post.objects.all(),
-    }
-    return render(request, 'home/deals.html', context, {'title_text':title_text})
-
 def stats(request):
     title_text = 'Stats'
     return render(request, 'home/statistics.html', {'title_text':title_text})
@@ -36,17 +31,23 @@ def contact(request):
     title_text = 'Contact'
     return render(request, 'home/contact.html', {'title_text':title_text})
 
-class UserPostListView(ListView):
+class TagMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(TagMixin, self).get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
+class TagIndexView(TagMixin, ListView):
+    template_name = 'home/deals.html'
     model = Post
-    template_name = 'home/user_posts.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
+    ordering = ['-date_posted']
     paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
+        return Post.objects.filter(tags__slug=self.kwargs.get('slug'))
 
-class PostListView(ListView):
+class PostListView(TagMixin, ListView):
     model = Post
     template_name = 'home/deals.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
@@ -60,6 +61,16 @@ class PostListView(ListView):
         else:
             object_list = self.model.objects.all()
         return object_list
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'home/user_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 class PostDetailView(DetailView):
     model = Post

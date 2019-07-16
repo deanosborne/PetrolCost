@@ -1,11 +1,13 @@
-from django.urls import path
+from django.urls import *
+from django.conf.urls import *
 from .views import (
     PostListView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
-    UserPostListView
+    UserPostListView,
+    TagIndexView
 )
 from . import views
 
@@ -20,5 +22,6 @@ urlpatterns = [
     path('deals/', PostListView.as_view(), name='deals'),
     path('stats/', views.stats, name='stats'),
     path('contact/', views.contact, name='contact'),
+    url(r'^tag/(?P<slug>[-\w]+)/$', TagIndexView.as_view(), name='tagged')
 
 ]
