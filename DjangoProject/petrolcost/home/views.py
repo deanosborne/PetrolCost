@@ -44,17 +44,18 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'home/add_comment_to_post.html', {'form': form})
+
 @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
-    return redirect('post-detail', pk=comment.post.pk)
+    return redirect('post_detail', pk=comment.post.pk)
 
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
-    return redirect('post-detail', pk=comment.post.pk)
+    return redirect('post_detail', pk=comment.post.pk)
 
 class TagMixin(object):
     def get_context_data(self, **kwargs):
@@ -67,7 +68,7 @@ class HomeListView(TagMixin, ListView):
     template_name = 'home/home.html'
 
 class TagIndexView(TagMixin, ListView):
-    template_name = 'home/deals.html'
+    template_name = 'home/home.html'
     model = Post
     context_object_name = 'posts'
     ordering = ['-date_posted']
@@ -78,7 +79,7 @@ class TagIndexView(TagMixin, ListView):
 
 class PostListView(TagMixin, ListView):
     model = Post
-    template_name = 'home/deals.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'home/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
