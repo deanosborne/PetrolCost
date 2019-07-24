@@ -33,7 +33,8 @@ Changes:
 - Templates organized/made/updated
 - Various other minor changed made to organization of .py/template files
 
-Iteration 3 WIP
+Iteration 3 Uploaded
+- Site finished
 
 Changes:
 - Create post button
